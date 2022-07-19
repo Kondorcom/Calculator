@@ -1,0 +1,96 @@
+body{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    background-color: chocolate;
+    flex-direction: column;
+    align-items: center;
+}
+#container{
+    padding: 50px;
+    background-color: burlywood;
+    display: flex;
+    width: 400px;
+    min-height: 500px;
+    
+    justify-content: space-between;
+    align-items: center;
+    
+    flex-direction: column;
+    border-radius: 30px;
+    margin-top: 150px;
+    border: 3px solid black;
+
+}
+#buttons{
+    
+    background-color: burlywood;
+    display: flex;
+    width: 100%;
+    
+    justify-content: space-around;
+    align-items: center;
+    gap: 10px;
+    flex-direction: column;
+    border-radius: 30px;
+
+}
+.btn-row{
+    display: flex;
+    justify-content: space-around;
+    flex: 1;
+    width: 100%;
+    gap: 10px;
+    align-items: stretch;
+}
+.clr-dlt{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 10px;
+}
+
+.clr_dlt{
+    color: black;
+    
+    height: 62px;
+    border-radius: 5px;
+    border: 3px solid black;
+    font-size: 35px;
+    flex: 1 1 0;
+    /* flex-grow: 1; */
+    
+}
+.btns, .btns_oprt{
+    color: black;
+    height: 62px;
+    font-size:35px;
+    border: 3px solid black;
+    flex: 1 1 0;
+    border-radius: 5px;
+}
+.screen{
+    display: flex;
+    flex-direction: column;
+    min-height: 100px;
+    background-color: whitesmoke;
+    width:100%;
+    border: 3px solid black;
+    border-radius: 5px;
+}
+.screenTopRow{
+    background-color: aqua;
+    font-size: 35px;
+    flex: 1 1 1;
+    min-height: 35px;
+    }
+.screenBottomRow{
+    background-color: cadetblue;
+    font-size: 45px;
+    flex: 1 1 0;
+}
+.screenTopRow, .screenBottomRow{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
