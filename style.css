@@ -61,7 +61,7 @@ body{
     /* flex-grow: 1; */
     
 }
-.btns, .btns_oprt{
+.btns, .btns_oprt, .btns_equals{
     color: black;
     height: 62px;
     font-size:35px;

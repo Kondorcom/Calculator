@@ -19,20 +19,25 @@ function operate(operator, x, y){
         case '+':
             add(x,y);
             console.log(add(x,y));
+            break;
         case '-':
             subtract(x,y);
-            console.log(subtract(x,y));
+            console.log('subtract: ', subtract(x,y));
+            break;
         case '*':
             multiply(x,y);
             console.log(multiply(x,y));
+            break;
         case '/':
             divide(x,y);
             console.log(divide(x,y));
+            break;
     }
 }
 
 let allNumbers = document.querySelectorAll('.btns');
 let allOperators = document.querySelectorAll('.btns_oprt');
+let equalsBtn = document.querySelector('.btns_equals')
 
 let bottomScreen = document.querySelector('.screenBottomRow');
 let topScreen = document.querySelector('.screenTopRow');
@@ -42,9 +47,29 @@ let wasOperatorPressed = false;
 let wasNmbrPressed = true;
 
 let arrayOfNumbersToCalculate = [];
+let firstNmbr = 0;
+let secondNmbr = 0;
+let solution = 0;
+let operatorPressed;
+let firstOperant;
+let secondOperant;
+
 
 for (let i = 0; i < allNumbers.length; i++) {
-    allNumbers[i].addEventListener('click', function() {
+        allNumbers[i].addEventListener('click', nmbrPressedEvent);}
+
+for (let i = 0; i < allOperators.length; i++) {
+        allOperators[i].addEventListener('click', oprtPressedEvent);}  
+equalsBtn.addEventListener('click', equalsSolution);
+
+function equalsSolution(){
+    console.log('pressed');
+    console.log('first number: ', firstNmbr);
+    console.log('second number: ', secondNmbr);
+    console.log(operate(operatorPressed,firstNmbr,secondNmbr));
+}
+
+function nmbrPressedEvent(){
     console.clear();
     console.log("You clicked:", this.innerHTML);
     let numberPressed = this.innerHTML;  
@@ -56,43 +81,50 @@ for (let i = 0; i < allNumbers.length; i++) {
         bottomScreen.textContent = undefined;
         bottomScreen.textContent = bottomScreen.textContent+numberPressed;
         wasNmbrPressed = true;
+        
     }   else {
         bottomScreen.textContent = bottomScreen.textContent+numberPressed;
+        console.log('bottom screen number = ', bottomScreen.textContent);
+        console.log('second operant nmbr ', secondOperant);
+        console.log('first operant nmbr', firstOperant);
     }
-        nmbrOfBtnPress ++;
-          
+        nmbrOfBtnPress ++;        
     
-      
-    }
-    
-    );
-     }
-
-for (let i = 0; i < allOperators.length; i++) {
-    allOperators[i].addEventListener('click', function() {
+}
+// function oprtPressedEvent1(){
+//     console.log("You clicked:", this.innerHTML);
+//     operatorPressed = this.innerHTML; 
+//     topScreen.textContent = bottomScreen.textContent + operatorPressed;
+//     wasOperatorPressed = true;
+//     firstNmbr = topScreen.textContent;
+// }
+function oprtPressedEvent(){
     console.log("You clicked:", this.innerHTML);
-    let operatorPressed = this.innerHTML;   
-    arrayOfNumbersToCalculate[indx] = bottomScreen.textContent;
+    operatorPressed = this.innerHTML;   //operator that was pressed
+    arrayOfNumbersToCalculate[indx] = bottomScreen.textContent; 
+    secondOperant = this.innerHTML;
+    console.log('second operant ', secondOperant);
     topScreen.textContent = bottomScreen.textContent + operatorPressed;
     wasOperatorPressed = true;
     console.table(arrayOfNumbersToCalculate);
-        
+    firstNmbr = arrayOfNumbersToCalculate[0];
+    secondNmbr = arrayOfNumbersToCalculate[1];
+    if (arrayOfNumbersToCalculate[1] !== undefined){
+        console.log(operate(operatorPressed,firstNmbr,secondNmbr));
+    }        
         // indx++;
         console.log('position in array: ', indx);
     if (wasNmbrPressed === true){
+        firstOperant = operatorPressed;
+        console.log('first operant ', firstOperant);
         indx ++;
     }
     wasNmbrPressed = false;
-    // if (nmbrOfBtnPress === 0 ){
-    //     topScreen.textContent = undefined;
-    //     topScreen.textContent = topScreen.textContent+operatorPressed;
-    // }   else {
-    //     topScreen.textContent = topScreen.textContent+operatorPressed;
-    // }
-    //     nmbrOfBtnPress ++;
-           
-    });
+    
 }
+
+     
+
 
 function clearAll(){
     //let arrayOfNumbersToCalculate = [];
@@ -107,49 +139,50 @@ function clearAll(){
 function removeLastDigit(){
     let btmText = bottomScreen.textContent;
     btmText = btmText.slice(0,-1);
-
     bottomScreen.textContent = btmText;
 }
 
-    
-// function checkIfNumber(x){
-//     if (typeof x =='number'){
-//         console.log('koji kurac')
-//         return true;
-        
-        
-//     }   else return false;
-// }
+    // for (let i = 0; i < allNumbers.length; i++) {
+//     allNumbers[i].addEventListener('click', function() {
+//     console.clear();
+//     console.log("You clicked:", this.innerHTML);
+//     let numberPressed = this.innerHTML;  
+//     if (wasOperatorPressed === true){
+//         nmbrOfBtnPress = 0;
+//         wasOperatorPressed = false;
+//     }
+//     if (nmbrOfBtnPress === 0 ){
+//         bottomScreen.textContent = undefined;
+//         bottomScreen.textContent = bottomScreen.textContent+numberPressed;
+//         wasNmbrPressed = true;
+//     }   else {
+//         bottomScreen.textContent = bottomScreen.textContent+numberPressed;
+//     }
+//         nmbrOfBtnPress ++;        
+//     }
+//     );}
 
-    
-// const container = document.querySelector('#container');
-// const buttons = container.querySelector('#buttons');
-
-//       console.log(buttons);
-
-//     let nmbr = 1;
-//     createGrid(3);
-
-// function createGrid(size){
-//         for (let i=0; i<size; i++){
-//     createRow(size);
-// }
-// }
-
-// function createRow(rowSize){
-// const gridRow = document.createElement('div');
-// gridRow.classList.add('gridRow');
-// // container.appendChild(gridRow);
-// buttons.appendChild(gridRow);
-
-
-// for (let i=0; i<rowSize; i++){
-//     const gridElement = document.createElement('button');
-//     gridElement.setAttribute('id', 'btn-nmbr');
-//     gridElement.classList.add('gridElement');
-//     gridElement.textContent = nmbr;
-//     nmbr ++;
-//     gridRow.appendChild(gridElement);
-    
-// }
-// }
+  // console.log("You clicked:", this.innerHTML);
+    // let operatorPressed = this.innerHTML;   
+    // arrayOfNumbersToCalculate[indx] = bottomScreen.textContent;
+    // topScreen.textContent = bottomScreen.textContent + operatorPressed;
+    // wasOperatorPressed = true;
+    // console.table(arrayOfNumbersToCalculate);
+    // firstNmbr = arrayOfNumbersToCalculate[0];
+    // secondNmbr = arrayOfNumbersToCalculate[1];
+    // if (arrayOfNumbersToCalculate[1] !== undefined){
+    //     console.log(operate(operatorPressed,firstNmbr,secondNmbr));
+    // }        
+    //     // indx++;
+    //     console.log('position in array: ', indx);
+    // if (wasNmbrPressed === true){
+    //     indx ++;
+    // }
+    // wasNmbrPressed = false;
+    // if (nmbrOfBtnPress === 0 ){
+    //     topScreen.textContent = undefined;
+    //     topScreen.textContent = topScreen.textContent+operatorPressed;
+    // }   else {
+    //     topScreen.textContent = topScreen.textContent+operatorPressed;
+    // }
+    //     nmbrOfBtnPress ++;
