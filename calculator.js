@@ -1,5 +1,5 @@
 function add(a,b){
-    let sum = a + b;
+    let sum = parseInt(a) + parseInt(b);
     return sum;
 }
 function subtract(a,b){
@@ -12,25 +12,31 @@ function multiply(a,b){
 }
 function divide(a,b){
     let div = a / b;
-    return div;
+    return roundOff(div);
 }
 function operate(operator, x, y){
     switch (operator){
         case '+':
-            add(x,y);
-            console.log(add(x,y));
+            topScreen.textContent = add(x,y);
+            
+            console.log('add', add(x,y));
+            return add(x,y);
             break;
         case '-':
             subtract(x,y);
+            
             console.log('subtract: ', subtract(x,y));
+            return subtract(x,y);
             break;
         case '*':
             multiply(x,y);
             console.log(multiply(x,y));
+            return multiply(x,y);
             break;
         case '/':
             divide(x,y);
             console.log(divide(x,y));
+            return (divide(x,y));
             break;
     }
 }
@@ -44,145 +50,193 @@ let topScreen = document.querySelector('.screenTopRow');
 let nmbrOfBtnPress = 0;
 let indx = 0;
 let wasOperatorPressed = false;
-let wasNmbrPressed = true;
+let wasNmbrPressed = false;
 
 let arrayOfNumbersToCalculate = [];
-let firstNmbr = 0;
-let secondNmbr = 0;
-let solution = 0;
-let operatorPressed;
+let firstNmbr = undefined;
+let secondNmbr = undefined;
+let solution = undefined;
+let operatorPressed = undefined;
 let firstOperant;
 let secondOperant;
-
+let firstNmbrDef = false;
+let secondNmbrDef = false;
+let solutionDef = false;
 
 for (let i = 0; i < allNumbers.length; i++) {
         allNumbers[i].addEventListener('click', nmbrPressedEvent);}
 
 for (let i = 0; i < allOperators.length; i++) {
         allOperators[i].addEventListener('click', oprtPressedEvent);}  
+
 equalsBtn.addEventListener('click', equalsSolution);
 
-function equalsSolution(){
-    console.log('pressed');
-    console.log('first number: ', firstNmbr);
-    console.log('second number: ', secondNmbr);
-    console.log(operate(operatorPressed,firstNmbr,secondNmbr));
-}
+
 
 function nmbrPressedEvent(){
-    console.clear();
-    console.log("You clicked:", this.innerHTML);
-    let numberPressed = this.innerHTML;  
-    if (wasOperatorPressed === true){
-        nmbrOfBtnPress = 0;
-        wasOperatorPressed = false;
-    }
-    if (nmbrOfBtnPress === 0 ){
-        bottomScreen.textContent = undefined;
-        bottomScreen.textContent = bottomScreen.textContent+numberPressed;
-        wasNmbrPressed = true;
+    //console.clear();
+    let numberPressed = this.innerHTML;
+    if (wasOperatorPressed === false){
         
-    }   else {
-        bottomScreen.textContent = bottomScreen.textContent+numberPressed;
-        console.log('bottom screen number = ', bottomScreen.textContent);
-        console.log('second operant nmbr ', secondOperant);
-        console.log('first operant nmbr', firstOperant);
-    }
-        nmbrOfBtnPress ++;        
-    
-}
-// function oprtPressedEvent1(){
-//     console.log("You clicked:", this.innerHTML);
-//     operatorPressed = this.innerHTML; 
-//     topScreen.textContent = bottomScreen.textContent + operatorPressed;
-//     wasOperatorPressed = true;
-//     firstNmbr = topScreen.textContent;
-// }
-function oprtPressedEvent(){
-    console.log("You clicked:", this.innerHTML);
-    operatorPressed = this.innerHTML;   //operator that was pressed
-    arrayOfNumbersToCalculate[indx] = bottomScreen.textContent; 
-    secondOperant = this.innerHTML;
-    console.log('second operant ', secondOperant);
-    topScreen.textContent = bottomScreen.textContent + operatorPressed;
-    wasOperatorPressed = true;
-    console.table(arrayOfNumbersToCalculate);
-    firstNmbr = arrayOfNumbersToCalculate[0];
-    secondNmbr = arrayOfNumbersToCalculate[1];
-    if (arrayOfNumbersToCalculate[1] !== undefined){
-        console.log(operate(operatorPressed,firstNmbr,secondNmbr));
-    }        
-        // indx++;
-        console.log('position in array: ', indx);
-    if (wasNmbrPressed === true){
-        firstOperant = operatorPressed;
-        console.log('first operant ', firstOperant);
-        indx ++;
-    }
-    wasNmbrPressed = false;
-    
-}
 
-     
+        
+
+        
+    
+    if (firstNmbr === undefined){
+        firstNmbr = numberPressed;
+        bottomScreen.textContent = firstNmbr;
+        wasNmbrPressed = true;
+    }else{
+        if (firstNmbr.includes('.') & numberPressed === '.') {
+
+        }
+        else {
+
+        console.log('numberPressed', numberPressed);
+        firstNmbr += numberPressed;
+        console.log('first number', firstNmbr);
+        bottomScreen.textContent = bottomScreen.textContent + numberPressed;
+        wasNmbrPressed = true;
+    }
+    } }
+    if (wasOperatorPressed === true){
+        
+        firstNmbrDef = true;
+        
+        if (secondNmbr=== undefined){
+            secondNmbr = numberPressed;
+            console.log('second number', secondNmbr);
+            bottomScreen.textContent = secondNmbr;
+            wasNmbrPressed = true;
+            secondNmbrDef = true;
+
+        }   else{
+            if (secondNmbr.includes('.') & numberPressed === '.') {
+            
+            }
+            else{
+
+            
+            secondNmbr += numberPressed;
+            console.log('second number', secondNmbr);
+            bottomScreen.textContent += numberPressed;
+            wasNmbrPressed = true;
+            secondNmbrDef = true;
+        }
+        }
+       
+
+    }
+
+
+    
+}
+function oprtPressedEvent(){
+    if (wasNmbrPressed === true){
+
+    
+    let nextOperant = this.innerHTML;
+    topScreen.textContent = solution + nextOperant;
+    console.log('nextOp', nextOperant);
+    console.log('secondNmbr', secondNmbr , ' firstOperant', firstOperant);
+    if (secondNmbr === '0' & firstOperant === '/'){
+        console.log('alert');
+        alert('cant divide by zero')
+    }else{
+console.log('secondNmbr', secondNmbr , ' firstOperant', firstOperant);
+    if (firstNmbr != undefined & secondNmbr != undefined & solutionDef === false){
+        solution = operate(firstOperant, firstNmbr, secondNmbr);
+        //topScreen.textContent = solution;
+        secondNmbr = undefined;
+        firstNmbr = solution;
+        solutionDef = true;
+        console.log('first if');
+        topScreen.textContent = solution + nextOperant;
+    }
+    if (solutionDef === true & secondNmbr != undefined){
+        solution = operate(firstOperant, solution, secondNmbr);
+        secondNmbr = undefined;
+        firstNmbr = solution;
+        topScreen.textContent = solution + nextOperant;
+        console.log('solution 2', solution);
+        console.log('operant', firstOperant);
+       }
+    operatorPressed = this.innerHTML;
+    wasOperatorPressed = true;
+    
+    if (wasNmbrPressed === true & solutionDef === false){
+        firstOperant = operatorPressed;
+        topScreen.textContent = firstNmbr + firstOperant;
+        console.log('second if');
+    }
+    if (wasNmbrPressed === true & solutionDef === true){
+        firstOperant = operatorPressed;
+        // topScreen.textContent = firstNmbr + firstOperant;
+        console.log('fourth if');
+    }
+    // if (solutionDef === true){
+    //     topScreen.textContent = solution + operatorPressed;
+    //     secondNmbr = undefined;
+    //     console.log('third if');
+    // }
+  
+   
+    wasNmbrPressed = false;  
+}
+    }
+
+}
+function roundOff(num){
+    return +(Math.round(num + "e+2")  + "e-2");
+}
+function equalsSolution(){
+    if (secondNmbr === '0' & firstOperant === '/'){
+        console.log('alert');
+        alert('cant divide by zero')
+    }
+    else
+    {
+    if (solutionDef != false){
+        solution = operate(firstOperant, solution, secondNmbr);
+        topScreen.textContent = solution + '=';
+        solutionDef = true;
+        secondNmbr = undefined;
+        console.log('equals');
+    }
+    if (firstNmbr != undefined & secondNmbr != undefined & solutionDef === false){
+        solution = operate(firstOperant, firstNmbr, secondNmbr);
+        topScreen.textContent = solution + '=';
+        solutionDef = true;
+        secondNmbr = undefined;
+        console.log('equals2');
+    }
+}
+}
+function cleanBottomScreen(){
+    bottomScreen.textContent = undefined;
+}
 
 
 function clearAll(){
-    //let arrayOfNumbersToCalculate = [];
-    while(arrayOfNumbersToCalculate.length > 0) {
-        arrayOfNumbersToCalculate.pop();
-    }
-    topScreen.textContent = undefined;
+    
+    wasNmbrPressed = false;
+    topScreen.textContent = 0;
     bottomScreen.textContent = 0;
+    firstNmbr = undefined;
+    secondNmbr = undefined;
+    solution = undefined;
+    firstNmbrDef = false;
+    solutionDef = false;
+    wasOperatorPressed = false;
     nmbrOfBtnPress = 0;
     indx = 0;
 }
 function removeLastDigit(){
     let btmText = bottomScreen.textContent;
     btmText = btmText.slice(0,-1);
+    firstNmbr = firstNmbr.slice(0,-1);
+    secondNmbr = secondNmbr.slice(0,-1);
     bottomScreen.textContent = btmText;
 }
 
-    // for (let i = 0; i < allNumbers.length; i++) {
-//     allNumbers[i].addEventListener('click', function() {
-//     console.clear();
-//     console.log("You clicked:", this.innerHTML);
-//     let numberPressed = this.innerHTML;  
-//     if (wasOperatorPressed === true){
-//         nmbrOfBtnPress = 0;
-//         wasOperatorPressed = false;
-//     }
-//     if (nmbrOfBtnPress === 0 ){
-//         bottomScreen.textContent = undefined;
-//         bottomScreen.textContent = bottomScreen.textContent+numberPressed;
-//         wasNmbrPressed = true;
-//     }   else {
-//         bottomScreen.textContent = bottomScreen.textContent+numberPressed;
-//     }
-//         nmbrOfBtnPress ++;        
-//     }
-//     );}
-
-  // console.log("You clicked:", this.innerHTML);
-    // let operatorPressed = this.innerHTML;   
-    // arrayOfNumbersToCalculate[indx] = bottomScreen.textContent;
-    // topScreen.textContent = bottomScreen.textContent + operatorPressed;
-    // wasOperatorPressed = true;
-    // console.table(arrayOfNumbersToCalculate);
-    // firstNmbr = arrayOfNumbersToCalculate[0];
-    // secondNmbr = arrayOfNumbersToCalculate[1];
-    // if (arrayOfNumbersToCalculate[1] !== undefined){
-    //     console.log(operate(operatorPressed,firstNmbr,secondNmbr));
-    // }        
-    //     // indx++;
-    //     console.log('position in array: ', indx);
-    // if (wasNmbrPressed === true){
-    //     indx ++;
-    // }
-    // wasNmbrPressed = false;
-    // if (nmbrOfBtnPress === 0 ){
-    //     topScreen.textContent = undefined;
-    //     topScreen.textContent = topScreen.textContent+operatorPressed;
-    // }   else {
-    //     topScreen.textContent = topScreen.textContent+operatorPressed;
-    // }
-    //     nmbrOfBtnPress ++;
