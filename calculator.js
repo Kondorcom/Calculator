@@ -76,12 +76,7 @@ equalsBtn.addEventListener('click', equalsSolution);
 function nmbrPressedEvent(){
     //console.clear();
     let numberPressed = this.innerHTML;
-    if (wasOperatorPressed === false){
-        
-
-        
-
-        
+    if (wasOperatorPressed === false){     
     
     if (firstNmbr === undefined){
         firstNmbr = numberPressed;
@@ -116,7 +111,6 @@ function nmbrPressedEvent(){
             
             }
             else{
-
             
             secondNmbr += numberPressed;
             console.log('second number', secondNmbr);
@@ -125,12 +119,9 @@ function nmbrPressedEvent(){
             secondNmbrDef = true;
         }
         }
-       
 
     }
 
-
-    
 }
 function oprtPressedEvent(){
     if (wasNmbrPressed === true){
@@ -142,6 +133,7 @@ function oprtPressedEvent(){
     console.log('secondNmbr', secondNmbr , ' firstOperant', firstOperant);
     if (secondNmbr === '0' & firstOperant === '/'){
         console.log('alert');
+        clearAll();
         alert('cant divide by zero')
     }else{
 console.log('secondNmbr', secondNmbr , ' firstOperant', firstOperant);
@@ -174,13 +166,7 @@ console.log('secondNmbr', secondNmbr , ' firstOperant', firstOperant);
         firstOperant = operatorPressed;
         // topScreen.textContent = firstNmbr + firstOperant;
         console.log('fourth if');
-    }
-    // if (solutionDef === true){
-    //     topScreen.textContent = solution + operatorPressed;
-    //     secondNmbr = undefined;
-    //     console.log('third if');
-    // }
-  
+    } 
    
     wasNmbrPressed = false;  
 }
@@ -194,6 +180,7 @@ function equalsSolution(){
     if (secondNmbr === '0' & firstOperant === '/'){
         console.log('alert');
         alert('cant divide by zero')
+        clearAll();
     }
     else
     {
@@ -236,7 +223,10 @@ function removeLastDigit(){
     let btmText = bottomScreen.textContent;
     btmText = btmText.slice(0,-1);
     firstNmbr = firstNmbr.slice(0,-1);
-    secondNmbr = secondNmbr.slice(0,-1);
+    if (secondNmbr != undefined){
+        secondNmbr = secondNmbr.slice(0,-1);
+    }
+    
     bottomScreen.textContent = btmText;
 }
 
