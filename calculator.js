@@ -1,5 +1,5 @@
 function add(a,b){
-    let sum = parseInt(a) + parseInt(b);
+    let sum = parseFloat(a) + parseFloat(b);
     return sum;
 }
 function subtract(a,b){
@@ -19,23 +19,23 @@ function operate(operator, x, y){
         case '+':
             topScreen.textContent = add(x,y);
             
-            console.log('add', add(x,y));
+            //console.log('add', add(x,y));
             return add(x,y);
             break;
         case '-':
             subtract(x,y);
             
-            console.log('subtract: ', subtract(x,y));
+            //console.log('subtract: ', subtract(x,y));
             return subtract(x,y);
             break;
         case '*':
             multiply(x,y);
-            console.log(multiply(x,y));
+            //console.log(multiply(x,y));
             return multiply(x,y);
             break;
         case '/':
             divide(x,y);
-            console.log(divide(x,y));
+            //console.log(divide(x,y));
             return (divide(x,y));
             break;
     }
@@ -47,12 +47,10 @@ let equalsBtn = document.querySelector('.btns_equals')
 
 let bottomScreen = document.querySelector('.screenBottomRow');
 let topScreen = document.querySelector('.screenTopRow');
-let nmbrOfBtnPress = 0;
-let indx = 0;
+
 let wasOperatorPressed = false;
 let wasNmbrPressed = false;
 
-let arrayOfNumbersToCalculate = [];
 let firstNmbr = undefined;
 let secondNmbr = undefined;
 let solution = undefined;
@@ -72,8 +70,7 @@ for (let i = 0; i < allOperators.length; i++) {
 equalsBtn.addEventListener('click', equalsSolution);
 
 
-
-function nmbrPressedEvent(){
+function nmbrPressedEvent(x){
     //console.clear();
     let numberPressed = this.innerHTML;
     if (wasOperatorPressed === false){     
@@ -83,14 +80,14 @@ function nmbrPressedEvent(){
         bottomScreen.textContent = firstNmbr;
         wasNmbrPressed = true;
     }else{
-        if (firstNmbr.includes('.') & numberPressed === '.') {
+        if (firstNmbr.includes('.') & numberPressed === '.') {      // don't allow multiple '.' press
 
         }
         else {
 
-        console.log('numberPressed', numberPressed);
+        //console.log('numberPressed', numberPressed);
         firstNmbr += numberPressed;
-        console.log('first number', firstNmbr);
+        //console.log('first number', firstNmbr);
         bottomScreen.textContent = bottomScreen.textContent + numberPressed;
         wasNmbrPressed = true;
     }
@@ -101,19 +98,19 @@ function nmbrPressedEvent(){
         
         if (secondNmbr=== undefined){
             secondNmbr = numberPressed;
-            console.log('second number', secondNmbr);
+            //console.log('second number', secondNmbr);
             bottomScreen.textContent = secondNmbr;
             wasNmbrPressed = true;
             secondNmbrDef = true;
 
         }   else{
-            if (secondNmbr.includes('.') & numberPressed === '.') {
+            if (secondNmbr.includes('.') & numberPressed === '.') { // don't allow multiple '.' press
             
             }
             else{
             
             secondNmbr += numberPressed;
-            console.log('second number', secondNmbr);
+            //console.log('second number', secondNmbr);
             bottomScreen.textContent += numberPressed;
             wasNmbrPressed = true;
             secondNmbrDef = true;
@@ -129,21 +126,21 @@ function oprtPressedEvent(){
     
     let nextOperant = this.innerHTML;
     topScreen.textContent = solution + nextOperant;
-    console.log('nextOp', nextOperant);
-    console.log('secondNmbr', secondNmbr , ' firstOperant', firstOperant);
+    //console.log('nextOp', nextOperant);
+    //console.log('secondNmbr', secondNmbr , ' firstOperant', firstOperant);
     if (secondNmbr === '0' & firstOperant === '/'){
-        console.log('alert');
+        //console.log('alert');
         clearAll();
         alert('cant divide by zero')
     }else{
-console.log('secondNmbr', secondNmbr , ' firstOperant', firstOperant);
+//console.log('secondNmbr', secondNmbr , ' firstOperant', firstOperant);
     if (firstNmbr != undefined & secondNmbr != undefined & solutionDef === false){
         solution = operate(firstOperant, firstNmbr, secondNmbr);
         //topScreen.textContent = solution;
         secondNmbr = undefined;
         firstNmbr = solution;
         solutionDef = true;
-        console.log('first if');
+        //console.log('first if');
         topScreen.textContent = solution + nextOperant;
     }
     if (solutionDef === true & secondNmbr != undefined){
@@ -151,8 +148,8 @@ console.log('secondNmbr', secondNmbr , ' firstOperant', firstOperant);
         secondNmbr = undefined;
         firstNmbr = solution;
         topScreen.textContent = solution + nextOperant;
-        console.log('solution 2', solution);
-        console.log('operant', firstOperant);
+        //console.log('solution 2', solution);
+        //console.log('operant', firstOperant);
        }
     operatorPressed = this.innerHTML;
     wasOperatorPressed = true;
@@ -160,12 +157,12 @@ console.log('secondNmbr', secondNmbr , ' firstOperant', firstOperant);
     if (wasNmbrPressed === true & solutionDef === false){
         firstOperant = operatorPressed;
         topScreen.textContent = firstNmbr + firstOperant;
-        console.log('second if');
+        //console.log('second if');
     }
     if (wasNmbrPressed === true & solutionDef === true){
         firstOperant = operatorPressed;
         // topScreen.textContent = firstNmbr + firstOperant;
-        console.log('fourth if');
+        //console.log('fourth if');
     } 
    
     wasNmbrPressed = false;  
@@ -178,25 +175,26 @@ function roundOff(num){
 }
 function equalsSolution(){
     if (secondNmbr === '0' & firstOperant === '/'){
-        console.log('alert');
+        //console.log('alert');
         alert('cant divide by zero')
         clearAll();
     }
     else
     {
-    if (solutionDef != false){
+    if (solutionDef != false & secondNmbr != undefined){
         solution = operate(firstOperant, solution, secondNmbr);
         topScreen.textContent = solution + '=';
         solutionDef = true;
         secondNmbr = undefined;
-        console.log('equals');
+
+        //console.log('equals');
     }
     if (firstNmbr != undefined & secondNmbr != undefined & solutionDef === false){
         solution = operate(firstOperant, firstNmbr, secondNmbr);
         topScreen.textContent = solution + '=';
         solutionDef = true;
         secondNmbr = undefined;
-        console.log('equals2');
+        //console.log('equals2');
     }
 }
 }
